@@ -36,22 +36,13 @@ msg_ok "Installed Dependencies"
 # SMB Share Details
 SMB_SERVER="192.168.1.100"    # Replace with your SMB server IP
 SMB_SHARE="sharedphotos"      # Replace with your SMB share name
+PHOTO_ORIGINALS_PATH="/mnt/root/nfs_data/Trips"
 
-# Step 1: Create SMB Credentials File
-msg_info "Creating SMB Credentials File"
-cat <<EOF >/etc/smbcredentials
-username=smbuser            # Replace with your SMB username
-password=smbpassword        # Replace with your SMB password
-EOF
-
-# Secure the credentials file
-chmod 600 /etc/smbcredentials
-msg_ok "Created and Secured SMB Credentials File"
 
 # Step 2: Mount the SMB Share
 msg_info "Mounting SMB Share"
 mkdir -p /opt/photoprism/photos/originals
-echo "//$SMB_SERVER/$SMB_SHARE /opt/photoprism/photos/originals cifs credentials=/etc/smbcredentials,iocharset=utf8,vers=3.0 0 0" >> /etc/fstab
+echo "//$SMB_SERVER/$SMB_SHARE $PHOTO_ORIGINALS_PATH cifs credentials=/etc/smbcredentials,iocharset=utf8,vers=3.0 0 0" >> /etc/fstab
 mount -a
 msg_ok "Mounted SMB Share"
 
@@ -72,7 +63,7 @@ PHOTOPRISM_HTTP_HOST='0.0.0.0'
 PHOTOPRISM_HTTP_PORT='2342'
 PHOTOPRISM_SITE_CAPTION='https://tteck.github.io/Proxmox/'
 PHOTOPRISM_STORAGE_PATH='/opt/photoprism/storage'
-PHOTOPRISM_ORIGINALS_PATH='/opt/photoprism/photos/originals'
+PHOTOPRISM_ORIGINALS_PATH='$PHOTO_ORIGINALS_PATH'
 PHOTOPRISM_IMPORT_PATH='/opt/photoprism/photos/import'
 EOF
 ln -sf /opt/photoprism/bin/photoprism /usr/local/bin/photoprism
