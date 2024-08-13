@@ -34,7 +34,7 @@ export PATH=/usr/local:$PATH
 msg_ok "Installed Dependencies"
 
 # SMB Share Details
-SMB_SERVER="192.168.1.100"    # Replace with your SMB server IP
+SMB_SERVER="192.168.1.95"    # Replace with your SMB server IP
 SMB_SHARE="sharedphotos"      # Replace with your SMB share name
 PHOTO_ORIGINALS_PATH="/mnt/root/nfs_data/Trips"
 
